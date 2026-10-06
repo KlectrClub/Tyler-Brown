@@ -3,6 +3,19 @@
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
+
+<style>
+  #gifOverlay {
+    position: fixed;
+    display: none;
+    width: 300px;
+    height: 300px;
+    object-fit: contain;
+    pointer-events: none;
+    z-index: 10;
+  }
+</style>
+  
   <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
 </head>
 
@@ -20,14 +33,16 @@
     </a-camera>
 
     <a-entity mindar-image-target="targetIndex: 0">
-      <a-image
-  src="./superhero_football_blocking_action.gif"
-  position="0 0 0.1"
-  width="1"
-  height="1">
-</a-image>
+     
+   
     </a-entity>
 
   </a-scene>
+
+<img
+  id="gifOverlay"
+  src="./superhero_football_blocking_action.gif"
+  alt="">
+  
 </body>
 </html>
