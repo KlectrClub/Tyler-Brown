@@ -2,24 +2,40 @@
 <html>
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
 
-<style>
-  #gifOverlay {
-    position: fixed;
-    display: none;
-    width: 300px;
-    height: 300px;
-    object-fit: contain;
-    pointer-events: none;
-    z-index: 10;
-  }
-</style>
-  
+  <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
+
+  <style>
+    html, body {
+      margin: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    #gifOverlay {
+      position: fixed;
+      display: none;
+      width: 300px;
+      height: 300px;
+      object-fit: contain;
+      pointer-events: none;
+      z-index: 10;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+    }
+  </style>
 </head>
 
 <body>
+
+  <img
+    id="gifOverlay"
+    src="./superhero_football_blocking_action.gif"
+    alt="">
+
   <a-scene
     mindar-image="imageTargetSrc: ./targets.mind;"
     color-space="sRGB"
@@ -33,30 +49,22 @@
     </a-camera>
 
     <a-entity mindar-image-target="targetIndex: 0">
-     
-   
     </a-entity>
 
   </a-scene>
 
-<img
-  id="gifOverlay"
-  src="./superhero_football_blocking_action.gif"
-  alt="">
+  <script>
+    const target = document.querySelector('[mindar-image-target]');
+    const gif = document.getElementById('gifOverlay');
 
-<script>
-  const target = document.querySelector('[mindar-image-target]');
-  const gif = document.getElementById('gifOverlay');
+    target.addEventListener('targetFound', function () {
+      gif.style.display = 'block';
+    });
 
-  target.addEventListener('targetFound', () => {
-    gif.style.display = 'block';
-  });
+    target.addEventListener('targetLost', function () {
+      gif.style.display = 'none';
+    });
+  </script>
 
-  target.addEventListener('targetLost', () => {
-    gif.style.display = 'none';
-  });
-</script>
-
-  
 </body>
 </html>
