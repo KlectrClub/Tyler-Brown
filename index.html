@@ -2,10 +2,8 @@
 <html>
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
   <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
-
   <style>
     html, body {
       margin: 0;
@@ -13,8 +11,7 @@
       height: 100%;
       overflow: hidden;
     }
-
-    #gifOverlay {
+    #videoOverlay {
       position: fixed;
       display: none;
       width: 300px;
@@ -28,43 +25,42 @@
     }
   </style>
 </head>
-
 <body>
-
-  <img
-    id="gifOverlay"
-    src="./superhero_football_blocking_action.gif"
-    alt="">
-
+  <video
+    id="videoOverlay"
+    src="./TB%20Test%20Video.mp4"
+    playsinline
+    muted
+    loop
+    preload="auto">
+  </video>
   <a-scene
     mindar-image="imageTargetSrc: ./targets.mind;"
     color-space="sRGB"
     renderer="colorManagement: true, physicallyCorrectLights"
     vr-mode-ui="enabled: false"
     device-orientation-permission-ui="enabled: false">
-
     <a-camera
       position="0 0 0"
       look-controls="enabled: false">
     </a-camera>
-
     <a-entity mindar-image-target="targetIndex: 0">
     </a-entity>
-
   </a-scene>
-
   <script>
     const target = document.querySelector('[mindar-image-target]');
-    const gif = document.getElementById('gifOverlay');
-
+    const video = document.getElementById('videoOverlay');
     target.addEventListener('targetFound', function () {
-      gif.style.display = 'block';
+      video.style.display = 'block';
+      video.play().catch(function (error) {
+        console.log('Video playback could not start:', error);
+      });
     });
-
     target.addEventListener('targetLost', function () {
-      gif.style.display = 'none';
+      video.style.display = 'none';
+      video.pause();
+      video.currentTime = 0;
     });
   </script>
-
 </body>
 </html>
